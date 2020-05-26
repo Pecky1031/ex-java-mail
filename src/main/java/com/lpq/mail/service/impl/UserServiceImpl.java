@@ -189,7 +189,7 @@ public class UserServiceImpl implements UserService {
         //插入本地邮箱
         MailAccountInfo mailAccountInfo = new MailAccountInfo();
         mailAccountInfo.setUserId(userInfo.getId());
-        mailAccountInfo.setMailAccount(userInfo.getUsername());
+        mailAccountInfo.setMailAccount(userInfo.getUsername() + "@sbss");
         mailAccountInfo.setMailPassword(userInfo.getPassword());
         mailAccountInfo.setMailPopAddress("127.0.0.1");
         mailAccountInfo.setMailPopPort("1524");
