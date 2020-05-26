@@ -83,7 +83,6 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    @Transactional
     public boolean receiveMail(Integer userId) throws GlobalException, InterruptedException, ParseException, IOException, MessagingException {
         //先删后存，防止数据库里面邮件重复
         MailInfoExample example = new MailInfoExample();

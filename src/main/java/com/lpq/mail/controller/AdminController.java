@@ -33,14 +33,16 @@ public class AdminController {
     private UserService userService;
     private IpService ipService;
     private LogService logService;
+    private MailController mailController;
 
 
     @Autowired
-    public AdminController(ManagerService managerService, UserService userService, IpService ipService, LogService logService) {
+    public AdminController(ManagerService managerService, UserService userService, IpService ipService, LogService logService, MailController mailController) {
         this.managerService = managerService;
         this.userService = userService;
         this.ipService = ipService;
         this.logService = logService;
+        this.mailController = mailController;
     }
 
     /**
@@ -308,5 +310,21 @@ public class AdminController {
     public BaseResult<List<LogInfo>> listLogInfo(){
         logService.insert(new LogInfo("查看操作日志",Thread.currentThread().getStackTrace()[1].getMethodName()));
         return BaseResult.success(logService.select());
+    }
+
+    /**
+     * description: 管理员群发邮件 <br>
+     * version: 1.0 <br>
+     * date: 2020.05.26 11:42 <br>
+     * author: Dominikyang <br>
+     *
+     * @param mailVO
+     * @param httpServletRequest
+     * @return com.lpq.mail.result.BaseResult<java.lang.Void>
+     */
+    @PostMapping("sendMail")
+    public BaseResult<Void> sendMail(@RequestBody MailVO mailVO, HttpServletRequest httpServletRequest){
+        logService.insert(new LogInfo("管理员发送邮件",Thread.currentThread().getStackTrace()[1].getMethodName()));
+        return mailController.sendMail(mailVO,httpServletRequest);
     }
 }

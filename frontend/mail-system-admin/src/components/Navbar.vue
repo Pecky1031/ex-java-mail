@@ -20,6 +20,7 @@
                     {name:'/ip',navItem:'ip过滤控制'},
                     {name:'/password',navItem:'管理员修改密码'},
                     {name:'/log',navItem:'日志管理'},
+                    {name:'/send',navItem:'群发邮件'}
                 ]
             };
         },

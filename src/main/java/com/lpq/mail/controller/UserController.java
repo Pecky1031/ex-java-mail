@@ -20,6 +20,7 @@ import java.util.List;
  * @author Wei yuyaung
  * @date 2020.05.19 12:16
  */
+@CrossOrigin
 @RestController
 @RequestMapping("user")
 public class UserController {

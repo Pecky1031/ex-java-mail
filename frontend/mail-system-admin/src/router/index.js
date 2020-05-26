@@ -9,6 +9,7 @@ import Server from '@/views/Server'
 import Ip from '@/views/Ip'
 import Password from '@/views/Password'
 import Log from '@/views/Log'
+import Send from '@/views/Send'
 
 Vue.use(VueRouter);
 
@@ -53,6 +54,11 @@ export default new VueRouter({
       name:'Log',
       path:'/Log',
       component: Log
+    },
+    {
+      name:'Send',
+      path:'/Send',
+      component: Send
     },
   ]
 })
