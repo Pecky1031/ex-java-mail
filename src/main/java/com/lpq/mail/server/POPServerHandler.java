@@ -62,6 +62,13 @@ public class POPServerHandler implements Runnable {
                 LocalMailInfoExample mailExample = new LocalMailInfoExample();
                 mailExample.createCriteria().andUserIdEqualTo(userId);
                 List<LocalMailInfo> mails = mailInfoDao.selectByExample(mailExample);
+                if(mails.size()<1){
+                    sendMessage("null",out);
+                    this.socket = null ;
+                    this.in = null ;
+                    this.out = null ;
+                    return;
+                }
                 mailExample.clear();
                 for(int i = 0 ; i < mails.size() ; i++ ){
                     sendMessage(mails.get(i).getFrom() , out);

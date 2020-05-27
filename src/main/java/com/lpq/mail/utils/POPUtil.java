@@ -45,6 +45,9 @@ public class POPUtil {
                 MailInfo mailInfo = new MailInfo();
                 mailInfo.setUserId(mailAccountInfo.getUserId());
                 line = getReturn(in);
+                if(line.equals("null")){
+                    break;
+                }
                 mailInfo.setFrom(line);
                 line = getReturn(in);
                 mailInfo.setTo(line);
