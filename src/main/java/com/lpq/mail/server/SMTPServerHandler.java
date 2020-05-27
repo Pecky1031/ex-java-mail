@@ -1,6 +1,7 @@
 package com.lpq.mail.server;
 
 import com.lpq.mail.dao.LocalMailInfoDao;
+import com.lpq.mail.dao.MailAccountInfoDao;
 import com.lpq.mail.dao.MailInfoDao;
 import com.lpq.mail.dao.UserInfoDao;
 import com.lpq.mail.entity.*;
@@ -27,7 +28,7 @@ public class SMTPServerHandler implements Runnable {
     private SqlSessionFactory factory;
     private SqlSession sqlSession;
     private LocalMailInfoDao mailInfoDao ;
-    private UserInfoDao userInfoDao;
+    private MailAccountInfoDao mailAccountInfoDao;
 
     public SMTPServerHandler(Socket socket) throws IOException {
         this.socket = socket ;
@@ -36,6 +37,7 @@ public class SMTPServerHandler implements Runnable {
         factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis-config.xml"));
         sqlSession = factory.openSession(true);
         this.mailInfoDao = sqlSession.getMapper(LocalMailInfoDao.class);
+        this.mailAccountInfoDao = sqlSession.getMapper(MailAccountInfoDao.class);
     }
     @SneakyThrows
     @Override
@@ -49,14 +51,14 @@ public class SMTPServerHandler implements Runnable {
             mailInfo.setSubject(getRequest(in));
             mailInfo.setContent(getRequest(in));
             mailInfo.setDate(new Date());
-            UserInfoExample example = new UserInfoExample();
-            example.createCriteria().andUsernameEqualTo(to);
-            List<UserInfo> users = userInfoDao.selectByExample(example);
+            MailAccountInfoExample example = new MailAccountInfoExample();
+            example.createCriteria().andMailAccountEqualTo(to);
+            List<MailAccountInfo> mailAccount = mailAccountInfoDao.selectByExample(example);
             int userId ;
-            if(users.size()<1){
+            if(mailAccount.size() < 1){
                 userId = -1 ;
             }else{
-                userId = users.get(0).getId();
+                userId = mailAccount.get(0).getUserId();
             }
             mailInfo.setUserId(userId);
             mailInfoDao.insert(mailInfo);

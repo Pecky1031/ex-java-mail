@@ -16,6 +16,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,7 +67,8 @@ public class MailController {
             if (success) {
                 List<MailInfo> mails = mailService.takeMail(userId);
                 if (mails.size() < 1) {
-                    return BaseResult.success(null);
+                    mails = new ArrayList<>();
+                    return BaseResult.success(mails);
                 }
                 return BaseResult.success(mails);
             } else {

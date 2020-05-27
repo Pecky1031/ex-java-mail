@@ -32,7 +32,7 @@ public class POPUtil {
         String server = mailAccountInfo.getMailPopAddress();
         Socket socket = null ;
         try{
-            socket = new Socket(server,port);
+            socket = new  Socket(server,port);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             sendServer("pop " + mailAccountInfo.getMailAccount()+" "+mailAccountInfo.getMailPassword(), out);
