@@ -23,5 +23,6 @@
         <!--方式一-->
         <mapper resource="mapper/MailAccountInfoDao.xml"/>
         <mapper resource="mapper/LocalMailInfoDao.xml"/>
+        <mapper resource="mapper/UserInfoDao.xml"/>
     </mappers>
 </configuration>

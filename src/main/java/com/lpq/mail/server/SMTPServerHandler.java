@@ -27,6 +27,7 @@ public class SMTPServerHandler implements Runnable {
     private SqlSessionFactory factory;
     private SqlSession sqlSession;
     private LocalMailInfoDao mailInfoDao ;
+    private UserInfoDao userInfoDao;
 
     public SMTPServerHandler(Socket socket) throws IOException {
         this.socket = socket ;
@@ -43,11 +44,20 @@ public class SMTPServerHandler implements Runnable {
             LocalMailInfo mailInfo = new LocalMailInfo();
             String userID = getRequest(in);
             mailInfo.setFrom(getRequest(in));
-            mailInfo.setTo(getRequest(in));
+            String to = getRequest(in);
+            mailInfo.setTo(to);
             mailInfo.setSubject(getRequest(in));
             mailInfo.setContent(getRequest(in));
             mailInfo.setDate(new Date());
-            int userId = Integer.parseInt(userID);
+            UserInfoExample example = new UserInfoExample();
+            example.createCriteria().andUsernameEqualTo(to);
+            List<UserInfo> users = userInfoDao.selectByExample(example);
+            int userId ;
+            if(users.size()<1){
+                userId = -1 ;
+            }else{
+                userId = users.get(0).getId();
+            }
             mailInfo.setUserId(userId);
             mailInfoDao.insert(mailInfo);
             sendMessage("250 发送成功" , out);
